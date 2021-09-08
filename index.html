@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="//www.xiph.org/images/logos/xiph.ico" type="image/x-icon"/>
+    <link rel="stylesheet" title="default demosheet" href="demo.css" type="text/css"/>
+    <title>RNNoise: Learning Noise Suppression</title>
+</head>
+
+<body>
+
+
+<h2>Show Me the Samples!</h2>
+
+<div class="comparison">
+    <audio controls="" id="music_player">
+        Your browser does not support the audio tag.
+    </audio>
+    <div>
+        <p class="compare_label" style="display: inline-block">Suppression algorithm</p>
+        <ul class="algorithm">
+            <li onclick="setProcessing(0, this);" id="default_processing">No suppression</li>
+            <li onclick="setProcessing(1, this);">RNNoise</li>
+            <li onclick="setProcessing(2, this);">Speexdsp</li>
+        </ul>
+    </div>
+    <div>
+        <p class="compare_label" style="display: inline-block">Noise level (SNR)</p>
+        <ul class="codec">
+            <li onclick="setLevel(0, this);">0 dB</li>
+            <li onclick="setLevel(1, this);">5 dB</li>
+            <li onclick="setLevel(2, this);">10 dB</li>
+            <li onclick="setLevel(3, this);" id="default_level">15 dB</li>
+            <li onclick="setLevel(4, this);">20 dB</li>
+            <li onclick="setLevel(5, this);">Clean</li>
+        </ul>
+    </div>
+    <div>
+        <p class="compare_label" style="display: inline-block">Noise type</p>
+        <ul class="bitrate" id="noise_type_selector">
+            <li onclick="setType(0, this);" id="default_type">Babble noise</li>
+            <li onclick="setType(1, this);">Car noise</li>
+            <li onclick="setType(2, this);">Street noise</li>
+        </ul>
+    </div>
+    <p>Select where to start playing when selecting a new sample</p>
+    <button type="button" onclick="music_norestart();">Keep playing</button>
+    <button type="button" onclick="music_setrestart();">Set current position as restart point</button>
+    <p style="display: inline-block" id="music_restart_string">Player will <b>continue</b> when changing sample.</p>
+</div>
+
+<h3>Try it on your voice!</h3>
+
+<p>Not happy with the samples above? You can actually record from your microphone and have your audio denoised in (near)
+    real-time. If you click on the button below, RNNoise will perform noise suppression in Javascript from your browser.
+    The algorithm runs in real-time but we've purposely <b>delayed it by a few seconds</b> to make it easier to hear the denoised output.
+    <b>Make sure to wear headphones otherwise you'll hear a feedback loop.</b> To start the demo, select either "No suppression"
+    or "RNNoise". You can toggle between the two to see the effect of the suppression. If your input doesn't have enough noise,
+    you can artificially add some by clicking the "white noise" button. </p>
+
+<div class="comparison">
+    <div>
+        <p class="compare_label" style="display: inline-block">Suppression algorithm</p>
+        <ul class="algorithm">
+            <li onclick="liveNoiseSuppression(0, this);" id="default_live_noise_suppression">Off</li>
+            <li onclick="liveNoiseSuppression(1, this);">No suppression</li>
+            <li onclick="liveNoiseSuppression(2, this);">RNNoise</li>
+        </ul>
+    </div>
+
+    <p class="compare_label" style="display: inline-block">Noise type</p>
+    <ul class="bitrate">
+        <li onclick="liveNoise(0, this);" id="default_live_noise">None</li>
+        <li onclick="liveNoise(1, this);">White noise</li>
+    </ul>
+</div>
+
+<canvas id="source_spectrogram" width="16" height="16"></canvas>
+<canvas id="destination_spectrogram" width="16" height="16"></canvas>
+
+<h3>Donate Your Noise to Science</h3>
+
+<div style='text-decoration: line-through; color: gray;'>
+    <p>If you think this work is useful, there's an easy way to help make it even better! All it takes is a minute
+        of your time. Click on the link below, to let us record one minute of noise from where you are. This noise can
+        be used to improve the training of the neural network. As a side benefit,
+        it means that the network will know what kind of noise you have and might do a better job when you get to use it
+        for videoconferencing (e.g. in WebRTC). We're interested in noise from any environment where you might communicate using voice.
+        That can be your office, your car, on the street, or anywhere you might use your phone or computer.</p>
+</div>
+
+<p>Thanks to everyone who donated their noise. The data is now <a href="https://media.xiph.org/rnnoise/rnnoise_contributions.tar.gz">freely available for download</a> (6.4 GB).
+    See the included README file for more details.</p>
+
+<h2>Where from here?</h2>
+
+<script src="js/ffmap.js"></script>
+<script src="js/noise.js"></script>
+<script src="js/record.js"></script>
+<script src="js/demo.js"></script>
+</body>
+</html>
+
